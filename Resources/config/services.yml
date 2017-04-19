@@ -15,7 +15,7 @@ services:
 
     hue.client:
         class: HueBundle\Services\Client
-        arguments: ["@hue.bridge_finder", "%hue_username%"]
+        arguments: ["@hue.bridge.finder", "%hue_username%"]
 
     hue.authorizer:
         class: HueBundle\Services\Authorizer
