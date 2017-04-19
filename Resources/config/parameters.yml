@@ -1,3 +1,2 @@
-# This file is auto-generated during the composer install
 parameters:
     bridge_finder_uri: http://www.meethue.com/api/nupnp
