@@ -1,0 +1,25 @@
+{
+    "name": "dahormez/hue-bundle",
+    "license": "proprietary",
+    "type": "project",
+    "require": {
+        "php": ">=5.5.9",
+        "sqmk/Phue": "1.6.*"
+    },
+    "scripts": {
+        "symfony-scripts": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters"
+        ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
+        "post-update-cmd": [
+            "@symfony-scripts"
+        ]
+    },
+    "extra": {
+        "incenteev-parameters": {
+            "file": "Resources/config/parameters.yml"
+        }
+    }
+}
