@@ -1,7 +1,22 @@
+parameters:
+    bridge.finder.uri: http://www.meethue.com/api/nupnp
+    guzzle.client.config:
+        cookies: true
+        verify: false
+
 services:
+    guzzle.client:
+        class: GuzzleHttp\Client
+        arguments: ['%guzzle.client.config%']
+
+    hue.bridge.finder:
+        class: HueBundle\Services\BridgeFinder
+        arguments: ["%bridge.finder.uri%"]
+
     hue.client:
-        class: Phue\Client
-        arguments: ["%hue_bridge_ip%", "%hue_username%"]
+        class: HueBundle\Services\Client
+        arguments: ["@hue.bridge_finder", "%hue_username%"]
+
     hue.authorizer:
         class: HueBundle\Services\Authorizer
         arguments: ["@hue.client"]
