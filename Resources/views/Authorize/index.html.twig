@@ -2,4 +2,9 @@
 
 {% block body %}
     Authorize
+
+    {% for bridge in bridges %}
+        {{ bridge.id }}
+        {{ bridge.internalipaddress }}
+    {% endfor %}
 {% endblock %}

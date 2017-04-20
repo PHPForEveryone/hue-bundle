@@ -11,7 +11,7 @@ services:
 
     hue.bridge.finder:
         class: HueBundle\Services\BridgeFinder
-        arguments: ["%bridge.finder.uri%"]
+        arguments: ["@guzzle.client", "%bridge.finder.uri%"]
 
     hue.client:
         class: HueBundle\Services\Client
