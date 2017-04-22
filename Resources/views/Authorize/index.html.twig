@@ -1,10 +1,35 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    Authorize
+    <p>Choose your bridge:</p>
 
-    {% for bridge in bridges %}
-        {{ bridge.id }}
-        {{ bridge.internalipaddress }}
-    {% endfor %}
+    <table>
+        <thead>
+            <th>id</th>
+            <th>ip</th>
+        </thead>
+        {% for bridge in bridges %}
+            <tr>
+                <td>{{ bridge.id }}</td>
+                <td>{{ bridge.internalipaddress }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <p>Login with your username</p>
+
+    <form action="{{ path('hue_authorize') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+
+        <input type="hidden" name="_target_path" value="/account" />
+        <input type="hidden" name="_redirect_path" value="/hue/authorize" />
+
+        <button type="submit">login</button>
+    </form>
 {% endblock %}

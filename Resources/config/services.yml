@@ -13,10 +13,26 @@ services:
         class: HueBundle\Services\BridgeFinder
         arguments: ["@guzzle.client", "%bridge.finder.uri%"]
 
+    hue.bridge.user:
+        class: HueBundle\Services\BridgeUser
+        arguments: ["@hue.session", "@hue.client"]
+
+    hue.session:
+        class: HueBundle\Services\HueSession
+        arguments: ["@session"]
+
     hue.client:
-        class: HueBundle\Services\Client
-        arguments: ["@hue.bridge.finder", "%hue_username%"]
+        class: HueBundle\Services\HueClient
+        arguments: ["@hue.session", "%hue_username%"]
 
     hue.authorizer:
         class: HueBundle\Services\Authorizer
-        arguments: ["@hue.client"]
+        arguments: ["@hue.session", "@hue.client"]
+
+    hue.user.provider:
+        class: HueBundle\Security\User\HueUserProvider
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    hue.user.authenticator:
+        class: HueBundle\Security\HueUserAuthenticator
+        arguments: ["@router"]

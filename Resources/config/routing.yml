@@ -1,7 +1,11 @@
 hue_homepage:
-    path:     /
+    path:     /hue
     defaults: { _controller: HueBundle:Default:index }
 
+hue_lights:
+    path:     /hue/lights
+    defaults: { _controller: HueBundle:Light:index }
+
 hue_authorize:
-    path:     /authorize
+    path:     /hue/authorize
     defaults: { _controller: HueBundle:Authorize:index }

@@ -1,0 +1,19 @@
+security:
+    providers:
+        hue.user.provider:
+            id: hue.user.provider
+
+    firewalls:
+        main:
+            pattern: ^/hue
+            provider: hue.user.provider
+            anonymous: ~
+            form_login:
+                login_path: hue_authorize
+                check_path: hue_authorize
+            guard:
+                authenticators:
+                    - hue.user.authenticator
+
+    access_control:
+        - { path: ^/hue$, roles: ROLE_USER }
