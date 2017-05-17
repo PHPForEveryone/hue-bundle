@@ -1,0 +1,37 @@
+<!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="registerModalLabel">{{ "BridgeRegisterModalTitle"|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="registerInfo">
+                    <p id="HueUserRegisterProgressInfo"
+                       data-progress-text="{{ "BridgeRegisterProgressText"|trans }}"
+                       data-error-text="{{ "BridgeRegisterErrorText"|trans }}"
+                       data-error-attempt-text="{{ "BridgeRegisterAttemptFailedText"|trans }}"
+                       data-success-text="{{ "BridgeRegisterSuccessText"|trans }}"
+                    ></p>
+                </div>
+
+                <!-- progress -->
+                <div class="progress">
+                    <div id="HueUserRegisterProgress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0;">
+                        <p id="HueUserRegisterProgressSeconds"></p>
+                    </div>
+                </div>
+
+                <form id="HueUserRegisterForm" action="{{ path('hue_authorize_ajax') }}" method="post">
+                    <div class="btn-group">
+                        <button class="registerTrigger btn btn-outline-primary" type="button">{{ "BridgeRegisterModalRegisterButton"|trans }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ "ModalCancelButton"|trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

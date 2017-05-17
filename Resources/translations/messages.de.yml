@@ -1,0 +1,30 @@
+# Bridge
+BridgeErrorNoConnection: Keine Verbindung zum Internet
+BridgeErrorNotFound: Keine Bridge gefunden
+
+# Authorization
+AuthorizeUsernameLabel: Benutzername
+AuthorizeLoginButton: Einloggen
+AuthorizeRegisterButton: Registrieren
+BridgeRegisterModalTitle: Neuen Nutzer erstellen
+BridgeRegisterModalRegisterButton: Registrier Prozess starten
+
+BridgeRegisterProgressText: Bitte drücke den Knopf an der Bridge
+BridgeRegisterAttemptFailedText: Registrierversuch gescheitert, probiere es erneut
+BridgeRegisterErrorText: Es ist ein Fehler aufgetreten
+BridgeRegisterSuccessText: Erfolgreich registriert
+
+# Modals
+ModalCancelButton: Abbrechen
+
+# Navigation
+NavigationDashboard: Dashboard
+NavigationConfig: Konfigurationen
+NavigationLogout: Abmelden
+
+# Configuration
+ConfigUser: Benutzer
+ConfigLight: Lampeneinstellungen
+ConfigRoom: Zimmereinstellungen
+ConfigBridge: Hue bridges
+ConfigAbout: Über

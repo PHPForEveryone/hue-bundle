@@ -3,6 +3,7 @@
 namespace HueBundle\Services;
 
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class HueSession
@@ -72,7 +73,34 @@ class HueSession
      */
     public function getUser()
     {
-        return $this->getUser();
+        if ($this->hasHost() == false) {
+            return null;
+        }
+
+        return $this->_session->get('user');
+    }
+
+    /**
+     * Gets the users name
+     * @return string
+     */
+    public function getUsername()
+    {
+        /** @var TokenInterface $user */
+        if ($user = $this->getUser()) {
+            return $user->getUsername();
+        }
+
+        return '';
+    }
+
+    /**
+     * Checks if user is available
+     * @return bool
+     */
+    public function hasUser()
+    {
+        return $this->_session->has('user');
     }
 
     /**
@@ -81,7 +109,7 @@ class HueSession
      */
     public function setUser($user)
     {
-        $this->_user = $user;
+        return $this->_session->set('user', $user);
     }
 
     /**

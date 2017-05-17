@@ -8,12 +8,18 @@ security:
             pattern: ^/hue
             provider: hue.user.provider
             anonymous: ~
+            logout:
+                path: /logout
+                invalidate_session: false
             form_login:
                 login_path: hue_authorize
                 check_path: hue_authorize
+                csrf_token_generator: security.csrf.token_manager
             guard:
                 authenticators:
                     - hue.user.authenticator
 
     access_control:
-        - { path: ^/hue$, roles: ROLE_USER }
+        - { path: ^/hue/authorize, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/hue/choose, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/hue, roles: ROLE_USER }

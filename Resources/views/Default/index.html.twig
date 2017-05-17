@@ -1,1 +1,32 @@
-Hello World!
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets filter="cssrewrite" output="css/huebundle.css"
+        "@hue"
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block header %}
+    {% include 'helper/SetNavbarItemActive.twig' with {'navItem': 'dashboard'} %}
+{% endblock %}
+
+{% block body %}
+    <div class="col col-md-12">
+        <h1>Dashboard</h1>
+
+        <p>{{ dump(lights) }}</p>
+
+        {% for group in groups %}
+            <p>
+                <i class="icon-{{ group.getClass() }}"></i>
+                <span>{{ group.getName() }}</span>
+            </p>
+
+            <p>{{ dump(group) }}</p>
+            <p>{{ dump(group.getAttributes()) }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

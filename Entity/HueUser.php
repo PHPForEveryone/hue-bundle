@@ -25,7 +25,7 @@ class HueUser implements UserInterface
     private $username;
 
     /**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
     private $apiKey;
 
@@ -48,6 +48,14 @@ class HueUser implements UserInterface
     }
 
     /**
+     * @param mixed $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
      * Gets the user role
      * @return array
      */
@@ -65,15 +73,15 @@ class HueUser implements UserInterface
         return $this->apiKey;
     }
 
-    public function getPassword()
+    /**
+     * @param mixed $apiKey
+     */
+    public function setApiKey($apiKey)
     {
+        $this->apiKey = $apiKey;
     }
 
-    public function getSalt()
-    {
-    }
-
-    public function eraseCredentials()
-    {
-    }
+    public function getPassword() { }
+    public function getSalt() { }
+    public function eraseCredentials() { }
 }

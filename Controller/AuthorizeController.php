@@ -2,13 +2,17 @@
 
 namespace HueBundle\Controller;
 
-use HueBundle\Controller\Exceptions\BridgeException;
-use HueBundle\Services\BridgeFinder;
+use HueBundle\Security\User\HueUserProvider;
+
+use HueBundle\Services\BridgeUser;
+use HueBundle\Services\HueSession;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
-use GuzzleHttp\Exception\ConnectException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class AuthorizeController
@@ -17,39 +21,56 @@ use GuzzleHttp\Exception\ConnectException;
 class AuthorizeController extends Controller
 {
 
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function indexAction(Request $request)
     {
+        // Check host
+        if ($this->hasHostToAuthorize() == false) {
+            return new RedirectResponse(
+                $this->generateUrl('hue_choose_bridge')
+            );
+        }
+
         $authenticationUtils = $this->get('security.authentication_utils');
-        // get the login error if there is one
+
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        /** @var HueUserProvider $userProvider */
+        $userProvider = $this->get('hue.user.provider');
+        $users = $userProvider->getAvailableUsers();
 
         return $this->render('HueBundle:Authorize:index.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
-            'bridges'       => $this->getBridgesList(),
+            'users'         => $users
         ]);
     }
 
     /**
-     * Gets the bridges list if available
-     * @return \ArrayIterator|array
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function getBridgesList()
+    public function ajaxAction(Request $request)
     {
-        /** @var BridgeFinder $finder */
-        $finder = $this->get('hue.bridge.finder');
-        $bridges = [];
+        /** @var BridgeUser $user */
+        $user = $this->get('hue.bridge.user');
+        $response = $user->createUserAjax();
 
-        try {
-            $bridges = $finder->getBridgesList();
-        } catch (ConnectException $ex) {
-            $this->addFlash('error', 'No internet connection');
-        } catch (BridgeException $ex) {
-            $this->addFlash('error', 'No bridge found');
-        } finally {
-            return $bridges;
-        }
+        return $response;
+    }
+
+    /**
+     * Checks if a host was setted
+     * @return bool
+     */
+    public function hasHostToAuthorize()
+    {
+        /** @var HueSession $session */
+        $session = $this->get('hue.session');
+        return $session->hasHost();
     }
 }

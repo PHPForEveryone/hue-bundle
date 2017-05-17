@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+    {% include 'helper/SetNavbarItemActive.twig' with {'navItem': 'config'} %}
+{% endblock %}
+
+{% block body %}
+    <div class="col col-md-12">
+        <h1>Config</h1>
+
+        <a class="btn btn-outline-primary" href="{{ url('hue_config_user') }}">{{ "ConfigUser"|trans }}</a>
+        <a class="btn btn-outline-primary" href="{{ url('hue_config_room') }}">{{ "ConfigRoom"|trans }}</a>
+        <a class="btn btn-outline-primary" href="{{ url('hue_config_light') }}">{{ "ConfigLight"|trans }}</a>
+        <a class="btn btn-outline-primary" href="{{ url('hue_config_about') }}">{{ "ConfigAbout"|trans }}</a>
+        <a class="btn btn-outline-primary" href="{{ url('hue_config_bridge') }}">{{ "ConfigBridge"|trans }}</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+    {% include 'helper/SetNavbarItemActive.twig' with {'navItem': 'config'} %}
+{% endblock %}
+
+{% block body %}
+    <div class="col col-md-12">
+        <h1>Config -> User</h1>
+
+        {% for user in users %}
+            {# Update User #}
+            <form action="{{ url('hue_config_user_update') }}" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" name="_username" value="{{ user.username }}" placeholder="{{ user.username }}">
+                </div>
+                <button type="submit" class="btn btn-warning">Update</button>
+            </form>
+
+            {# Delete User #}
+            <form action="{{ url('hue_config_user_delete') }}" method="post">
+                <input type="hidden" name="_username" value="{{ user.username }}">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        {% endfor %}
+    </div>
+{% endblock %}

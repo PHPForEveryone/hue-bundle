@@ -1,0 +1,30 @@
+# Bridge
+BridgeErrorNoConnection: No connection to internet
+BridgeErrorNotFound: No bridge found
+
+# Authorization
+AuthorizeUsernameLabel: Username
+AuthorizeLoginButton: Login
+AuthorizeRegisterButton: Register
+BridgeRegisterModalTitle: Create new user
+BridgeRegisterModalRegisterButton: Start register process
+
+BridgeRegisterProgressText: Please press the button on your bridge
+BridgeRegisterAttemptFailedText: Register process failed, please try again
+BridgeRegisterErrorText: An error occourd
+BridgeRegisterSuccessText: Successfully registered
+
+# Modals
+ModalCancelButton: Cancel
+
+# Navigation
+NavigationDashboard: Dashboard
+NavigationConfig: Preferences
+NavigationLogout: Logout
+
+# Configuration
+ConfigUser: User
+ConfigLight: Light setup
+ConfigRoom: Room setup
+ConfigBridge: Hue bridges
+ConfigAbout: About

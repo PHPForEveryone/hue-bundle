@@ -1,35 +1,61 @@
 {% extends "base.html.twig" %}
 
+{# Delete header #}
+{% block header %}{% endblock %}
+
 {% block body %}
-    <p>Choose your bridge:</p>
+    <div class="col-md-12">
+        <p>Users:</p>
 
-    <table>
-        <thead>
-            <th>id</th>
-            <th>ip</th>
-        </thead>
-        {% for bridge in bridges %}
-            <tr>
-                <td>{{ bridge.id }}</td>
-                <td>{{ bridge.internalipaddress }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+        <div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <td>ID</td>
+                    <td>Username</td>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
 
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+        <p>Login with your username</p>
 
-    <p>Login with your username</p>
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-    <form action="{{ path('hue_authorize') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        <form action="{{ path('hue_authorize') }}" method="post">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="hidden" name="_target_path" value="{{ path('hue_homepage') }}" />
+            <input type="hidden" name="_redirect_path" value="{{ path('hue_authorize') }}" />
 
+            <div class="form-group">
+                <label for="username">{{ "AuthorizeUsernameLabel"|trans }}</label>
+                <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" />
+            </div>
 
-        <input type="hidden" name="_target_path" value="/account" />
-        <input type="hidden" name="_redirect_path" value="/hue/authorize" />
+            <div class="btn-group">
+                <button class="btn btn-outline-primary" type="submit">{{ "AuthorizeLoginButton"|trans }}</button>
+                <button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#registerModal">{{ "AuthorizeRegisterButton"|trans }}</button>
+            </div>
+        </form>
 
-        <button type="submit">login</button>
-    </form>
+        {# Modals #}
+        {{ include('@Hue/Authorize/modals/register.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts '@HueBundle/Resources/public/src/js/HueUserRegister.jquery.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

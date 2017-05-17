@@ -5,8 +5,8 @@ namespace HueBundle\Security\User;
 use Doctrine\ORM\EntityManager;
 use HueBundle\Entity\HueUser;
 
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
@@ -23,7 +23,8 @@ class HueUserProvider implements UserProviderInterface
     private $_entityManager = null;
 
     /**
-     * WebserviceUserProvider constructor.
+     * HueUserProvider constructor.
+     * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
@@ -49,6 +50,16 @@ class HueUserProvider implements UserProviderInterface
         }
 
         return $user;
+    }
+
+    /**
+     * Gets the available users
+     * @return array|HueUser[]
+     */
+    public function getAvailableUsers()
+    {
+        $repository = $this->_entityManager->getRepository('HueBundle:HueUser');
+        return $repository->findAll();
     }
 
     /**

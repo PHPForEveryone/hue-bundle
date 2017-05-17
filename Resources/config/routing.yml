@@ -2,10 +2,62 @@ hue_homepage:
     path:     /hue
     defaults: { _controller: HueBundle:Default:index }
 
+hue_logout:
+    path:     /hue/logout
+    defaults: { _controller: HueBundle:Default:logout }
+
 hue_lights:
     path:     /hue/lights
     defaults: { _controller: HueBundle:Light:index }
 
+hue_rooms:
+    path:     /hue/rooms
+    defaults: { _controller: HueBundle:Rooms:index }
+
+# Configuration
+hue_config:
+    path:     /hue/config
+    defaults: { _controller: HueBundle:Config:index }
+
+# Configuration - User
+hue_config_user:
+    path:     /hue/config/user
+    defaults: { _controller: HueBundle:Config/User:index }
+hue_config_user_update:
+    path:     /hue/config/user/update
+    defaults: { _controller: HueBundle:Config/User:update }
+hue_config_user_delete:
+    path:     /hue/config/user/delete
+    defaults: { _controller: HueBundle:Config/User:delete }
+# Configuration - About
+hue_config_about:
+    path:     /hue/config/about
+    defaults: { _controller: HueBundle:Config/About:index }
+# Configuration - Bridge
+hue_config_bridge:
+    path:     /hue/config/bridge
+    defaults: { _controller: HueBundle:Config/Bridge:index }
+# Configuration - Light
+hue_config_light:
+    path:     /hue/config/light
+    defaults: { _controller: HueBundle:Config/Light:index }
+# Configuration - Room
+hue_config_room:
+    path:     /hue/config/room
+    defaults: { _controller: HueBundle:Config/Room:index }
+
+# Bridge
+hue_choose_bridge:
+    path:     /hue/choose
+    defaults: { _controller: HueBundle:Bridge:index }
+hue_choose_bridge_save:
+    path:     /hue/choose_save
+    defaults: { _controller: HueBundle:Bridge:choose }
+
+# Authorize
 hue_authorize:
     path:     /hue/authorize
     defaults: { _controller: HueBundle:Authorize:index }
+hue_authorize_ajax:
+    path:     /hue/authorize/ajax
+    defaults: { _controller: HueBundle:Authorize:ajax }

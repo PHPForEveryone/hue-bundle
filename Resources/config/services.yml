@@ -15,7 +15,7 @@ services:
 
     hue.bridge.user:
         class: HueBundle\Services\BridgeUser
-        arguments: ["@hue.session", "@hue.client"]
+        arguments: ["@hue.session", "@hue.client", "@doctrine.orm.default_entity_manager"]
 
     hue.session:
         class: HueBundle\Services\HueSession
@@ -23,11 +23,7 @@ services:
 
     hue.client:
         class: HueBundle\Services\HueClient
-        arguments: ["@hue.session", "%hue_username%"]
-
-    hue.authorizer:
-        class: HueBundle\Services\Authorizer
-        arguments: ["@hue.session", "@hue.client"]
+        arguments: ["@hue.session"]
 
     hue.user.provider:
         class: HueBundle\Security\User\HueUserProvider
@@ -35,4 +31,18 @@ services:
 
     hue.user.authenticator:
         class: HueBundle\Security\HueUserAuthenticator
-        arguments: ["@router"]
+        arguments: ["@router", "@hue.session", "@event_dispatcher"]
+
+    hue.user.syncer:
+        class: HueBundle\Services\Integration\UserSyncer
+        arguments: ["@doctrine.orm.default_entity_manager", "@hue.client", "@logger"]
+
+    hue.event.listener:
+        class: HueBundle\EventListener\HueAuthorizeListener
+        arguments: ["@hue.user.syncer"]
+        tags:
+            - { name: kernel.event_listener, event: client.authorized, method: onClientAuthorized }
+
+    hue.interaction.group:
+        class: HueBundle\Services\Interaction\HueGroup
+        arguments: []

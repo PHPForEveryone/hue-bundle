@@ -2,6 +2,7 @@
 
 namespace HueBundle\Security;
 
+use HueBundle\Services\HueSession;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,18 +14,41 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class HueUserAuthenticator
+ * @package HueBundle\Security
+ */
 class HueUserAuthenticator extends AbstractGuardAuthenticator
 {
 
     /**
-     * @var null|RouterInterface
+     * @var RouterInterface|null
      */
     private $_router = null;
 
-    public function __construct(RouterInterface $router)
+    /**
+     * @var HueSession|null
+     */
+    private $_session = null;
+
+    /**
+     * @var null|EventDispatcherInterface
+     */
+    private $_dispatcher = null;
+
+    /**
+     * HueUserAuthenticator constructor.
+     * @param RouterInterface $router
+     * @param HueSession $session
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(RouterInterface $router, HueSession $session, EventDispatcherInterface $dispatcher)
     {
         $this->_router = $router;
+        $this->_session = $session;
+        $this->_dispatcher = $dispatcher;
     }
 
     /**
@@ -86,6 +110,9 @@ class HueUserAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        $this->_session->setUser($token);
+        $this->_dispatcher->dispatch('client.authorized');
+
         $targetPath = $request->get('_target_path');
         return new RedirectResponse($targetPath);
     }
