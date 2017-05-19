@@ -1,0 +1,78 @@
+/**
+ * Forms
+ */
+
+// Checkbox group
+.checkbox-group {
+    display: table;
+    height: 55px;
+
+    .checkbox-trigger {
+        display: table-cell;
+        vertical-align: middle;
+        max-width: 60px;
+        min-width: 60px;
+    }
+
+    .checkbox-label {
+        display: table-cell;
+        vertical-align: middle;
+
+        .chklabel-text {
+            font-family: "Nunito-Regular", Arial, sans-serif;
+            font-weight: 400;
+            color: @brand-secondary;
+            line-height: 21px;
+
+            &.invalid,
+            &.has--error {
+                color: @brand-primary;
+                background: none;
+            }
+        }
+    }
+}
+
+// iOS Checkbox
+.option__chkbox__size {
+    width: 46.5px;
+    height: 25.5px;
+    border-radius: 30px; // @todo: create mixin
+}
+
+.chkbox {
+    display: none;
+}
+// Background
+.chklabel {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0;
+    background-color: @checkbox-background;
+    overflow: visible;
+    top: 3px;
+    .option__chkbox__size;
+}
+// Trigger
+.chklabel:before {
+    content: "";
+    background: #FFF;
+    position: absolute;
+    transition: all 0.3s ease-in 0s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 23px;
+    height: 23px;
+    top: 1px;
+    left: 2px;
+    border-radius: 30px; // @todo: create mixin
+}
+.chkbox:checked + .chklabel {
+    background-color: @brand-primary;
+}
+.chkbox:checked + .chklabel:before {
+    left: auto;
+    right: 1px;
+}
